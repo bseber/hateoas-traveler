@@ -1,5 +1,4 @@
 const http = {
-
   get(url, options = {}) {
     const headers = options.headers || {};
     const urlAppendix = http.stringifyQuery(options.queryParams);
@@ -29,7 +28,7 @@ const http = {
 
   async postJson(url, body) {
     const headers = {
-      'accept': 'application/json',
+      accept: 'application/json',
       'content-type': 'application/json',
     };
     const response = await http.post(url, JSON.stringify(body), { headers });
@@ -45,4 +44,3 @@ const http = {
 };
 
 export default http;
-

@@ -6,30 +6,32 @@ describe('traveler', () => {
   const resolve = data => Promise.resolve(data);
 
   beforeEach(() => {
-    jest.spyOn(http, 'getJson')
-      .mockImplementation(url => {
-        switch (url) {
-          case '/api':
-            return resolve(apiResponse);
-          case '/api/persons':
-            return resolve(personsResponse);
-          case '/api/persons/business':
-            return resolve(personsBusinessResponse);
-          case '/api/search?query=bat':
-            return resolve(searchResponse);
-          default:
-            throw new Error(`Whoops. Please define getJson mock data for url=${url}`);
-        }
-      });
-    jest.spyOn(http, 'postJson')
-      .mockImplementation((url) => {
-        switch (url) {
-          case '/api/persons':
-            return resolve(createPersonResponse);
-          default:
-            throw new Error(`Whoops. Please define postJson mock data for url=${url}`);
-        }
-      });
+    jest.spyOn(http, 'getJson').mockImplementation(url => {
+      switch (url) {
+        case '/api':
+          return resolve(apiResponse);
+        case '/api/persons':
+          return resolve(personsResponse);
+        case '/api/persons/business':
+          return resolve(personsBusinessResponse);
+        case '/api/search?query=bat':
+          return resolve(searchResponse);
+        default:
+          throw new Error(
+            `Whoops. Please define getJson mock data for url=${url}`,
+          );
+      }
+    });
+    jest.spyOn(http, 'postJson').mockImplementation(url => {
+      switch (url) {
+        case '/api/persons':
+          return resolve(createPersonResponse);
+        default:
+          throw new Error(
+            `Whoops. Please define postJson mock data for url=${url}`,
+          );
+      }
+    });
   });
 
   afterEach(() => {
@@ -37,12 +39,9 @@ describe('traveler', () => {
   });
 
   it('from', async () => {
-    const response = await traveler
-      .from('/api')
-      .get();
+    const response = await traveler.from('/api').get();
 
-    expect(response)
-      .toEqual(apiResponse);
+    expect(response).toEqual(apiResponse);
   });
 
   it('follow simple', async () => {
@@ -51,8 +50,7 @@ describe('traveler', () => {
       .follow('persons')
       .get();
 
-    expect(data)
-      .toEqual(personsResponse);
+    expect(data).toEqual(personsResponse);
   });
 
   it('follow deep (comma separated)', async () => {
@@ -61,8 +59,7 @@ describe('traveler', () => {
       .follow('persons', 'business')
       .get();
 
-    expect(data)
-      .toEqual(personsBusinessResponse);
+    expect(data).toEqual(personsBusinessResponse);
   });
 
   it('follow deep (array)', async () => {
@@ -71,8 +68,7 @@ describe('traveler', () => {
       .follow(['persons', 'business'])
       .get();
 
-    expect(data)
-      .toEqual(personsBusinessResponse);
+    expect(data).toEqual(personsBusinessResponse);
   });
 
   it('follow with templated query data', async () => {
@@ -82,8 +78,7 @@ describe('traveler', () => {
       .withQueryData({ query: 'bat' })
       .get();
 
-    expect(data)
-      .toEqual(searchResponse);
+    expect(data).toEqual(searchResponse);
   });
 
   it('follow with templated query data throws when #withQueryData has not been called', async () => {
@@ -93,10 +88,10 @@ describe('traveler', () => {
         .from('/api')
         .follow('search')
         .get();
-    }
-    catch (error) {
-      expect(error.message)
-        .toEqual('link="/api/search{?query}" is templated but no queryData is given');
+    } catch (error) {
+      expect(error.message).toEqual(
+        'link="/api/search{?query}" is templated but no queryData is given',
+      );
     }
   });
 
@@ -108,10 +103,10 @@ describe('traveler', () => {
         .follow('search')
         .withQueryData({ misspelled: 'query param' })
         .get();
-    }
-    catch (error) {
-      expect(error.message)
-        .toEqual('link="/api/search{?query}" requires parameters but "query" is undefined in queryData');
+    } catch (error) {
+      expect(error.message).toEqual(
+        'link="/api/search{?query}" requires parameters but "query" is undefined in queryData',
+      );
     }
   });
 
@@ -121,8 +116,7 @@ describe('traveler', () => {
       .follow('persons')
       .post({ firstname: 'Bruce', lastname: 'Wayne' });
 
-    expect(data)
-      .toEqual(createPersonResponse);
+    expect(data).toEqual(createPersonResponse);
   });
 });
 

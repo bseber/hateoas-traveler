@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "format": "prettier --write 'src/**/*.js'"
   },
   "keywords": [],
   "author": "Benjamin Seber <seber@synyx.de> (https://www.synyx.de)",
@@ -14,8 +15,11 @@
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "eslint": "4.19.1",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-jest": "21.17.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "jest": "23.1.0",
+    "prettier": "^1.13.4",
     "regenerator-runtime": "0.11.1"
   }
 }
