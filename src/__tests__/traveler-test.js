@@ -2,6 +2,7 @@ import traveler from '../traveler';
 import http from '../http';
 
 describe('traveler', () => {
+  /* eslint-disable jest/no-hooks */
   const resolve = data => Promise.resolve(data);
 
   beforeEach(() => {
@@ -21,7 +22,7 @@ describe('traveler', () => {
         }
       });
     jest.spyOn(http, 'postJson')
-      .mockImplementation((url, body) => {
+      .mockImplementation((url) => {
         switch (url) {
           case '/api/persons':
             return resolve(createPersonResponse);

@@ -4,7 +4,8 @@
   "description": "javascript module to traverse a hateoas api",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src"
   },
   "keywords": [],
   "author": "Benjamin Seber <seber@synyx.de> (https://www.synyx.de)",
@@ -12,6 +13,8 @@
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
+    "eslint": "4.19.1",
+    "eslint-plugin-jest": "21.17.0",
     "jest": "23.1.0",
     "regenerator-runtime": "0.11.1"
   }

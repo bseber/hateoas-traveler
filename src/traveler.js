@@ -27,6 +27,7 @@ const getFactory = (linksToFollow, queryData) => async function get() {
   const links = flatten(linksToFollow);
   let url = links.shift();
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
 
     const data = await http.getJson(url);

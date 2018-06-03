@@ -1,0 +1,34 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "jest"
+  ],
+  "env": {
+    "jest/globals": true,
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "jest/no-disabled-tests": "error",
+    "jest/no-focused-tests": "error",
+    "jest/no-hooks": "error",
+    "jest/no-identical-title": "error",
+    "jest/no-jasmine-globals": "error",
+    "jest/no-jest-import": "error",
+    "jest/no-large-snapshots": "warn",
+    "jest/prefer-to-be-null": "error",
+    "jest/prefer-to-be-undefined": "error",
+    "jest/prefer-to-have-length": "error",
+    "jest/valid-expect-in-promise": "error",
+    "jest/valid-expect": "error"
+  }
+}
