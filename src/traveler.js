@@ -39,7 +39,7 @@ const getFactory = (linksToFollow, queryData) => async function get() {
     const meta = data._links[follow];
     if (!meta) {
       throw new Error(
-        `could not find linkToFollow=${follow} in links=${JSON.stringify(data._links)}`
+        `could not find linkToFollow=${follow} in links=${JSON.stringify(data._links)}`,
       );
     }
 
@@ -48,19 +48,19 @@ const getFactory = (linksToFollow, queryData) => async function get() {
     if (meta.templated) {
       if (links.length !== 0) {
         throw new Error(
-          'only the last linkToFollow can be configured with params currently'
+          'only the last linkToFollow can be configured with params currently',
         );
       }
       if (!queryData) {
         throw new Error(
-          `link="${href}" is templated but no queryData is given`
+          `link="${href}" is templated but no queryData is given`,
         );
       }
 
       const missingParams = getMissingQueryDataParams(href, queryData);
       if (missingParams.length !== 0) {
         throw new Error(
-          `link="${href}" requires parameters but "${missingParams.join(',')}" is undefined in queryData`
+          `link="${href}" requires parameters but "${missingParams.join(',')}" is undefined in queryData`,
         );
       }
 
@@ -83,14 +83,14 @@ const postFactory = (linksToFollow) => async function post(payload) {
   const meta = data._links[postIdentifier];
   if (!meta) {
     throw new Error(
-      `could not find linkToFollow=${postIdentifier} in links=${JSON.stringify(data._links)}`
+      `could not find linkToFollow=${postIdentifier} in links=${JSON.stringify(data._links)}`,
     );
   }
 
   return http.postJson(meta.href, payload);
 };
 
-function getMissingQueryDataParams (href, queryData) {
+function getMissingQueryDataParams(href, queryData) {
   const missingParams = [];
   href.replace(/{\?(.+)}$/g, (_, param) => {
     if (typeof queryData[param] === 'undefined') {

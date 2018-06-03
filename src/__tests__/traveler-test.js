@@ -5,21 +5,30 @@ describe('traveler', () => {
   const resolve = data => Promise.resolve(data);
 
   beforeEach(() => {
-    jest.spyOn(http, 'getJson').mockImplementation(url => {
-      switch(url) {
-        case '/api': return resolve(apiResponse);
-        case '/api/persons': return resolve(personsResponse);
-        case '/api/persons/business': return resolve(personsBusinessResponse);
-        case '/api/search?query=bat': return resolve(searchResponse);
-        default: throw new Error(`Whoops. Please define getJson mock data for url=${url}`);
-      }
-    });
-    jest.spyOn(http, 'postJson').mockImplementation((url, body) => {
-      switch(url) {
-        case '/api/persons': return resolve(createPersonResponse);
-        default: throw new Error(`Whoops. Please define postJson mock data for url=${url}`);
-      }
-    });
+    jest.spyOn(http, 'getJson')
+      .mockImplementation(url => {
+        switch (url) {
+          case '/api':
+            return resolve(apiResponse);
+          case '/api/persons':
+            return resolve(personsResponse);
+          case '/api/persons/business':
+            return resolve(personsBusinessResponse);
+          case '/api/search?query=bat':
+            return resolve(searchResponse);
+          default:
+            throw new Error(`Whoops. Please define getJson mock data for url=${url}`);
+        }
+      });
+    jest.spyOn(http, 'postJson')
+      .mockImplementation((url, body) => {
+        switch (url) {
+          case '/api/persons':
+            return resolve(createPersonResponse);
+          default:
+            throw new Error(`Whoops. Please define postJson mock data for url=${url}`);
+        }
+      });
   });
 
   afterEach(() => {
@@ -31,7 +40,8 @@ describe('traveler', () => {
       .from('/api')
       .get();
 
-    expect(response).toEqual(apiResponse);
+    expect(response)
+      .toEqual(apiResponse);
   });
 
   it('follow simple', async () => {
@@ -40,7 +50,8 @@ describe('traveler', () => {
       .follow('persons')
       .get();
 
-    expect(data).toEqual(personsResponse);
+    expect(data)
+      .toEqual(personsResponse);
   });
 
   it('follow deep (comma separated)', async () => {
@@ -49,7 +60,8 @@ describe('traveler', () => {
       .follow('persons', 'business')
       .get();
 
-    expect(data).toEqual(personsBusinessResponse);
+    expect(data)
+      .toEqual(personsBusinessResponse);
   });
 
   it('follow deep (array)', async () => {
@@ -58,7 +70,8 @@ describe('traveler', () => {
       .follow(['persons', 'business'])
       .get();
 
-    expect(data).toEqual(personsBusinessResponse);
+    expect(data)
+      .toEqual(personsBusinessResponse);
   });
 
   it('follow with templated query data', async () => {
@@ -68,7 +81,8 @@ describe('traveler', () => {
       .withQueryData({ query: 'bat' })
       .get();
 
-    expect(data).toEqual(searchResponse);
+    expect(data)
+      .toEqual(searchResponse);
   });
 
   it('follow with templated query data throws when #withQueryData has not been called', async () => {
@@ -78,8 +92,10 @@ describe('traveler', () => {
         .from('/api')
         .follow('search')
         .get();
-    } catch(error) {
-      expect(error.message).toEqual('link="/api/search{?query}" is templated but no queryData is given');
+    }
+    catch (error) {
+      expect(error.message)
+        .toEqual('link="/api/search{?query}" is templated but no queryData is given');
     }
   });
 
@@ -91,8 +107,10 @@ describe('traveler', () => {
         .follow('search')
         .withQueryData({ misspelled: 'query param' })
         .get();
-    } catch(error) {
-      expect(error.message).toEqual('link="/api/search{?query}" requires parameters but "query" is undefined in queryData');
+    }
+    catch (error) {
+      expect(error.message)
+        .toEqual('link="/api/search{?query}" requires parameters but "query" is undefined in queryData');
     }
   });
 
@@ -102,43 +120,44 @@ describe('traveler', () => {
       .follow('persons')
       .post({ firstname: 'Bruce', lastname: 'Wayne' });
 
-    expect(data).toEqual(createPersonResponse);
+    expect(data)
+      .toEqual(createPersonResponse);
   });
 });
 
 const apiResponse = {
   _links: {
     self: {
-      href: "/api"
+      href: '/api',
     },
     persons: {
-      href: "/api/persons"
+      href: '/api/persons',
     },
     search: {
-      href: "/api/search{?query}",
+      href: '/api/search{?query}',
       templated: true,
-    }
-  }
+    },
+  },
 };
 
 const personsResponse = {
   content: [],
   _links: {
     self: {
-      href: "/api/persons"
+      href: '/api/persons',
     },
     business: {
-      href: '/api/persons/business'
-    }
-  }
+      href: '/api/persons/business',
+    },
+  },
 };
 
 const personsBusinessResponse = {
   content: [
     {
       personId: 1,
-      name: 'serious sam'
-    }
+      name: 'serious sam',
+    },
   ],
 };
 
@@ -146,20 +165,20 @@ const searchResponse = {
   content: [
     {
       personId: 1,
-      name: 'batman'
+      name: 'batman',
     },
     {
       personId: 2,
-      name: 'batgirl'
-    }
+      name: 'batgirl',
+    },
   ],
   _links: {
     self: {
-      href: '/api/search?query=bat'
+      href: '/api/search?query=bat',
     },
-  }
+  },
 };
 
 const createPersonResponse = {
-  ok: 42
+  ok: 42,
 };
