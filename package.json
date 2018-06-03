@@ -1,0 +1,18 @@
+{
+  "name": "hateoas-traveler",
+  "version": "0.1.0",
+  "description": "javascript module to traverse a hateoas api",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Benjamin Seber <seber@synyx.de> (https://www.synyx.de)",
+  "license": "apache-2.0",
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0",
+    "jest": "23.1.0",
+    "regenerator-runtime": "0.11.1"
+  }
+}
